@@ -13,6 +13,7 @@ Component.registerHooks([
 
 const router = new Router({
   mode: 'history',
+  base: '/',
   routes: [
     {
       path: '/',

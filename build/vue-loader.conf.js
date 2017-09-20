@@ -3,15 +3,13 @@ const config = require('../config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const cssLoaders = utils.cssLoaders({
-  sourceMap: isProduction
-    ? config.build.productionSourceMap
-    : config.dev.cssSourceMap,
-  extract: isProduction,
-});
-
 module.exports = {
-  loaders: cssLoaders,
+  loaders: utils.cssLoaders({
+    sourceMap: isProduction
+      ? config.build.productionSourceMap
+      : config.dev.cssSourceMap,
+    extract: isProduction,
+  }),
   transformToRequire: {
     video: 'src',
     source: 'src',

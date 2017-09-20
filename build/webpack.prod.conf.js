@@ -4,14 +4,14 @@ const webpack = require('webpack');
 const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
-// https://stackoverflow.com/questions/43884201/
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const loadMinified = require('./load-minified');
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -35,7 +35,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env,
     }),
-    new UglifyJSPlugin({
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
       sourceMap: true,
     }),
     // extract css into its own file
@@ -67,16 +70,18 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
+      serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname, './service-worker-prod.js'))}</script>`,
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      // eslint-disable-next-line no-unused-vars
       minChunks(module, count) {
-        const isJSResource = module.resource && /\.(css|js)$/.test(module.resource);
-        const isNodeModule = module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0;
         // any required modules inside node_modules are extracted to vendor
-        return isJSResource && isNodeModule;
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
+        );
       },
     }),
     // extract webpack runtime and module manifest to its own file in order to
@@ -93,18 +98,25 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*'],
       },
     ]),
+    // service worker caching
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'my-vue-app',
+      filename: 'service-worker.js',
+      staticFileGlobs: ['dist/**/*.{js,html,css}'],
+      minify: true,
+      stripPrefix: 'dist/',
+    }),
   ],
 });
 
 if (config.build.productionGzip) {
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
-      threshold: 10240,
-      minRatio: 0.8,
-    }));
+  webpackConfig.plugins.push(new CompressionWebpackPlugin({
+    asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
+    threshold: 10240,
+    minRatio: 0.8,
+  }));
 }
 
 if (config.build.bundleAnalyzerReport) {

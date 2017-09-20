@@ -1,6 +1,6 @@
 # vuejs-starterkit
 
-An opionated Vue.js starter-kit project integrating `vue-router`, `vuex`, `vue-loader` and `webpack3` for non-trivial projects.
+An opionated Vue.js PWA starter-kit project integrating `vue-router`, `vuex`, `vue-loader`, `vue-i18n` and `webpack3` for non-trivial projects.
 
 ## Build Setup
 

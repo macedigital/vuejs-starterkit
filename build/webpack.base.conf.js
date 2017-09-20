@@ -9,7 +9,7 @@ const friendlyFormatter = require('eslint-friendly-formatter');
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: './src/main.js',
   },
   output: {
     path: config.build.assetsRoot,
@@ -19,28 +19,14 @@ module.exports = {
       : config.dev.assetsPublicPath,
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.vue', '.json'],
-    modules: [path.join(__dirname, '../node_modules')],
+    extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': resolve('src'),
-      '@components': resolve('components'),
       vue$: 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
     },
   },
   module: {
-    noParse: [/static|assets/],
     rules: [
-      {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/],
-            transpileOnly: true,
-          },
-        }],
-      },
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',

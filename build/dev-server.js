@@ -21,7 +21,7 @@ const port = process.env.PORT || config.dev.port;
 const autoOpenBrowser = !!config.dev.autoOpenBrowser;
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-const proxyTable = config.dev.proxyTable;
+const { proxyTable } = config.dev;
 
 const app = express();
 const compiler = webpack(webpackConfig);
@@ -32,8 +32,7 @@ const devMiddleware = require('webpack-dev-middleware')(compiler, {
 });
 
 const hotMiddleware = require('webpack-hot-middleware')(compiler, {
-  log: () => {},
-  heartbeat: 2000,
+  log: false,
 });
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', (compilation) => {
@@ -68,13 +67,16 @@ app.use(staticPath, express.static('./static'));
 
 const uri = `http://localhost:${port}`;
 
+// eslint-disable-next-line no-underscore-dangle
 let _resolve;
 const readyPromise = new Promise((resolve) => {
   _resolve = resolve;
 });
 
+// eslint-disable-next-line no-console
 console.log('> Starting dev server...');
 devMiddleware.waitUntilValid(() => {
+  // eslint-disable-next-line no-console
   console.log(`> Listening at ${uri}\n`);
   // when env is testing, don't need open it
   if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {

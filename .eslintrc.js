@@ -4,18 +4,10 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-    'ecmaVersion': 7,
-    'sourceType': "module",
-    'allowImportExportEverywhere': false,
-    'ecmaFeatures': {
-      'jsx': true,
-      'modules': true
-    },
+    sourceType: 'module'
   },
   env: {
-    node: true,
     browser: true,
-    es6: true
   },
   extends: 'airbnb-base',
   // required to lint *.vue files
@@ -23,19 +15,18 @@ module.exports = {
     'html'
   ],
   // check if imports actually resolve
-  'settings': {
+  settings: {
     'import/resolver': {
-      'webpack': {
-        'config': 'build/webpack.base.conf.js'
+      webpack: {
+        config: 'build/webpack.base.conf.js'
       }
     }
   },
   // add your custom rules here
-  'rules': {
+  rules: {
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',
-      'ts': 'never',
       'vue': 'never'
     }],
     // allow optionalDependencies

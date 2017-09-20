@@ -2,7 +2,7 @@ const chalk = require('chalk');
 const semver = require('semver');
 const packageConfig = require('../package.json');
 const shell = require('shelljs');
-const execSync = require('child_process').execSync;
+const { execSync } = require('child_process');
 
 const exec = cmd => execSync(cmd).toString().trim();
 

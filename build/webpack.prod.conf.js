@@ -75,6 +75,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+      // eslint-disable-next-line no-unused-vars
       minChunks(module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (

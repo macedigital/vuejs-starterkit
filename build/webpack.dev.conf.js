@@ -28,6 +28,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
+      title: 'A Vuejs Starterkit',
       filename: 'index.html',
       template: 'index.html',
       inject: true,

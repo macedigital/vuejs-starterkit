@@ -12,6 +12,12 @@ module.exports = function karmaConfig(config) {
     preprocessors: {
       './index.js': ['webpack', 'sourcemap'],
     },
+    client: {
+      chai: {
+        includeStack: true,
+        showDiff: true,
+      },
+    },
     browsers: ['ChromeHeadless'],
     port: 9876,
     colors: true,

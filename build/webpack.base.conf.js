@@ -1,11 +1,11 @@
 const path = require('path');
+const friendlyFormatter = require('eslint-friendly-formatter');
+
 const utils = require('./utils');
 const config = require('../config');
 const vueLoaderConfig = require('./vue-loader.conf');
 
 const resolve = dir => path.join(__dirname, '..', dir);
-
-const friendlyFormatter = require('eslint-friendly-formatter');
 
 module.exports = {
   entry: {
@@ -21,7 +21,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      vue$: 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     },
   },

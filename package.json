@@ -21,7 +21,7 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "eslint": "npx eslint --ext .js,.vue build config src test/unit/specs test/e2e/specs"
+    "eslint": "eslint --ext .js,.vue build config src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
     "vue": "^2.5.2",
@@ -100,8 +100,8 @@
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 5.0.0"
+    "node": ">= 6.9.0",
+    "npm": ">= 3.10.0"
   },
   "browserslist": [
     "> 1%",

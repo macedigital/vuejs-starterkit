@@ -16,7 +16,10 @@ const router = new Router({
     {
       path: '*',
       component: {
-        template: '<h1>Page not found!</h1>',
+        functional: true,
+        render(h) {
+          return h('h1', 'Page not found!');
+        },
       },
     },
   ],

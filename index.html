@@ -27,9 +27,10 @@
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
   </head>
   <body>
-    <div id="app">
-      <noscript>Please enable javascript ...</noscript>
-    </div>
+    <div id="app"></div>
+    <noscript>
+      Please enable javascript ...
+    </noscript>
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->

@@ -1,6 +1,7 @@
 {
-  "name": "vuejs-starterkit",
-  "short_name": "vuejs-starterkit",
+  "name": "VueJS Starterkit",
+  "short_name": "Vue.js PWA",
+  "description": "A webpack-based Vue.js starter-kit project for building PWAs.",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -13,8 +14,10 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/?utm_source=web_app_manifest",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#fff",
+  "theme_color": "#4DBA87",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
 }

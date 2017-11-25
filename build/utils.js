@@ -2,14 +2,14 @@ const path = require('path');
 const config = require('../config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-exports.assetsPath = function assetsPath(_path) {
+exports.assetsPath = (_path) => {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
     : config.dev.assetsSubDirectory;
   return path.posix.join(assetsSubDirectory, _path);
 };
 
-exports.cssLoaders = function cssLoaders(options) {
+exports.cssLoaders = (options) => {
   const opts = Object.assign({}, options);
 
   const cssLoader = {
@@ -21,7 +21,7 @@ exports.cssLoaders = function cssLoaders(options) {
   };
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders(loader, loaderOptions) {
+  const generateLoaders = (loader, loaderOptions) => {
     const loaders = [cssLoader];
     if (loader) {
       loaders.push({
@@ -41,7 +41,7 @@ exports.cssLoaders = function cssLoaders(options) {
       });
     }
     return ['vue-style-loader'].concat(loaders);
-  }
+  };
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
@@ -56,7 +56,7 @@ exports.cssLoaders = function cssLoaders(options) {
 };
 
 // Generate loaders for standalone style files (outside of .vue)
-exports.styleLoaders = function styleLoaders(options) {
+exports.styleLoaders = (options) => {
   const output = [];
   const loaders = exports.cssLoaders(options);
   Object.keys(loaders).forEach((extension) => {
@@ -68,4 +68,29 @@ exports.styleLoaders = function styleLoaders(options) {
   });
 
   return output;
+};
+
+/**
+ * Rewrite paths in `manifest.json` files
+ * @link https://developer.mozilla.org/en-US/docs/Web/Manifest
+ * @param {Buffer} content
+ * @param {String} filepath
+ * @returns {Buffer}
+ */
+exports.updateManifest = (content, filepath) => {
+  if (!filepath.match(/manifest\.json$/)) {
+    return content;
+  }
+
+  const routePrefix = JSON.parse(config.build.env.ROUTER_PREFIX);
+  const assetPrefix = config.build.assetsPublicPath;
+  const addRoutePrefix = (route, prefix) => path.normalize(`${route.replace(/^\//, `${prefix}/`)}`);
+  const iconPrefix = icon => addRoutePrefix(icon.src, assetPrefix);
+  const json = JSON.parse(content);
+
+  json.start_url = addRoutePrefix(json.start_url, routePrefix);
+  json.scope = path.normalize(`${routePrefix}/`);
+  json.icons = json.icons.map(icon => Object.assign(icon, { src: iconPrefix(icon) }));
+
+  return Buffer.from(JSON.stringify(json), 'utf-8');
 };

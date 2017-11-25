@@ -98,6 +98,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*'],
+        transform: (content, filepath) => utils.updateManifest(content, filepath),
       },
     ]),
     // service worker caching

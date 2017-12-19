@@ -1,3 +1,5 @@
+@import "_variables";
+
 body {
   margin: 0;
 }
@@ -7,10 +9,10 @@ a {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: @font-family-base;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: @font-color-base;
 }
 
 main {
@@ -22,12 +24,12 @@ header {
   margin: 0;
   height: 56px;
   padding: 0 16px 0 24px;
-  background-color: #35495E;
-  color: #ffffff;
+  background-color: @header-background-color;
+  color: @header-text-color;
 }
 
 header a {
-  color: #fff;
+  color: @header-text-color;
   display: inline-block;
   position: relative;
   font-size: 20px;

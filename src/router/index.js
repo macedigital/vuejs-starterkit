@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Hello from '@/components/Hello';
+import Counter from '@/components/Counter';
 
 Vue.use(Router);
 
@@ -12,6 +13,11 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Hello,
+    },
+    {
+      path: '/vuex',
+      name: 'vuex',
+      component: Counter,
     },
     {
       path: '*',

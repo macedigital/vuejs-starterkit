@@ -9,20 +9,15 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
+
 export default {
   name: 'counter',
   computed: {
-    count() {
-      return this.$store.state.count;
-    },
+    ...mapState(['count']),
   },
   methods: {
-    increment() {
-      this.$store.commit('increment');
-    },
-    decrement() {
-      this.$store.commit('decrement');
-    },
+    ...mapMutations(['increment', 'decrement']),
   },
 };
 </script>

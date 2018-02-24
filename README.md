@@ -27,6 +27,16 @@ npm run e2e
 npm test
 ```
 
+You can provide custom port-numbers via the environment variable `PORT`:
+
+```sh
+# run dev-server on port 1337
+PORT=1337 node run dev
+
+# run e2e tests on port 8888
+PORT=8888 node run e2e
+```
+
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## Demo

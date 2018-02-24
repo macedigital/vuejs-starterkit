@@ -15,10 +15,10 @@
   "scripts": {
     "prepush": "npm run eslint",
     "dev": "node build/dev-server.js",
-    "start": "node build/dev-server.js",
+    "start": "npm run dev",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "e2e": "cross-env PORT=8082 node test/e2e/runner.js",
+    "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "eslint": "eslint --ext .js,.vue build config src test/unit/specs test/e2e/specs"
   },

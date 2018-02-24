@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Hello from '@/components/Hello';
-import Counter from '@/components/Counter';
+import HelloComponent from '@/components/Hello';
+import RouterComponent from '@/components/Router';
+import RouterChildComponent from '@/components/RouterChild';
+import StoreComponent from '@/components/Store';
 
 Vue.use(Router);
 
@@ -12,12 +14,28 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Hello,
+      component: HelloComponent,
     },
     {
-      path: '/vuex',
-      name: 'vuex',
-      component: Counter,
+      path: '/store',
+      name: 'store',
+      alias: '/vuex',
+      component: StoreComponent,
+    },
+    {
+      path: '/router',
+      component: RouterComponent,
+      children: [
+        {
+          path: '',
+          name: 'router',
+          component: RouterChildComponent,
+        },
+        {
+          path: ':child',
+          component: RouterChildComponent,
+        },
+      ],
     },
     {
       path: '*',

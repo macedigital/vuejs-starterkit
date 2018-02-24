@@ -1,11 +1,11 @@
-import { mount } from 'avoriaz';
+import { shallow } from 'avoriaz';
 import Hello from '@/components/Hello';
 
 describe('Hello.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(Hello);
+    wrapper = shallow(Hello);
   });
 
   it('should render headline based on `msg` data-property', () => {

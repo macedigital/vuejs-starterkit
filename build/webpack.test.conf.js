@@ -11,6 +11,7 @@ const webpackConfig = merge(baseConfig, {
   module: {
     rules: utils.styleLoaders(),
   },
+  mode: 'production',
   devtool: '#inline-source-map',
   resolveLoader: {
     alias: {

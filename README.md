@@ -1,5 +1,7 @@
 # vuejs-starterkit
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/macedigital/vuejs-starterkit.svg)](https://greenkeeper.io/)
+
 An opionated Vue.js PWA starter-kit project integrating `vue-router`, `vuex`, `vue-loader` and `webpack3` for non-trivial projects.
 
 ## Build Setup

@@ -41,6 +41,7 @@ module.exports = function karmaConfig(config) {
       ChromeHeadless: {
         base: 'Chrome',
         flags: [
+          '--no-sandbox',
           '--headless',
           '--disable-gpu',
           '--disable-translate',

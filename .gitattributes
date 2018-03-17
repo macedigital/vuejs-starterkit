@@ -1,5 +1,7 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto
 
-# Force LF on javascript files.
+# Force LF on javascript, vue, and json files.
 *.js text eol=lf
+*.vue text eol=lf
+*.json text eol=lf

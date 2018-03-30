@@ -49,6 +49,14 @@ module.exports = function karmaConfig(config) {
           '--remote-debugging-port=9222', // Without a remote debugging port, Google Chrome exits immediately.
         ],
       },
+      FirefoxHeadless: {
+        base: 'Firefox',
+        flags: [
+          '--safe-mode',
+          '--headless',
+          '--marionette',
+        ],
+      },
     },
   });
 };

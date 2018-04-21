@@ -24,6 +24,7 @@ module.exports = {
       '@': resolve('src'),
     },
   },
+  stats: 'minimal',
   module: {
     rules: [
       {

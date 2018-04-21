@@ -29,6 +29,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
+    publicPath: config.build.assetsPublicPath,
+    crossOriginLoading: 'anonymous',
   },
   optimization: {
     removeAvailableModules: true,
@@ -41,20 +43,19 @@ const webpackConfig = merge(baseWebpackConfig, {
     usedExports: true,
     concatenateModules: true,
     splitChunks: {
-      filename: utils.assetsPath('js/[id].[chunkhash].js'),
-      chunks: 'initial', // or: 'all', webpack 4 defaults to 'async' and mostly ignores 'cacheGroups' otherwise
       cacheGroups: {
-        vendor(module) {
-          // any required modules inside node_modules are extracted to vendor
-          return (
-            module.resource &&
-            /\.js$/.test(module.resource) &&
-            module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
-          );
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          priority: -20,
+          chunks: 'all',
         },
       },
     },
-    runtimeChunk: true,
+    // chunk for the webpack runtime code and chunk manifest
+    runtimeChunk: {
+      name: 'manifest',
+    },
     noEmitOnErrors: true,
     minimize: true,
     namedModules: true,
@@ -66,7 +67,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       'process.env': env,
     }),
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css'),
+      filename: utils.assetsPath('css/[name].[hash].css'),
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.

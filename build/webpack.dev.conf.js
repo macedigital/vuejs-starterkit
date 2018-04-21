@@ -21,7 +21,8 @@ module.exports = merge(baseWebpackConfig, {
   optimization: {
     noEmitOnErrors: true,
   },
-  // cheap-module-eval-source-map is faster for development
+  // fast incremental rebuilds
+  // @see https://webpack.js.org/configuration/devtool/ for a comparison
   devtool: '#cheap-module-eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
@@ -35,6 +36,7 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
+      // eslint-disable-next-line max-len
       serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname, './service-worker-dev.js'), 'utf-8')}</script>`,
     }),
     new FriendlyErrorsPlugin(),

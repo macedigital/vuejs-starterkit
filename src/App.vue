@@ -7,7 +7,7 @@
     </header>
     <main>
       <img src="./assets/images/logo.png" alt="Vue.js PWA">
-      <transition>
+      <transition appear mode="out-in" name="slide-fade">
         <router-view></router-view>
       </transition>
     </main>

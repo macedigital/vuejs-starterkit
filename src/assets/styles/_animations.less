@@ -1,0 +1,19 @@
+// @link https://vuejs.org/v2/guide/transitions.html
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+// main-transition animation
+.slide-fade-enter-active {
+  transition: all .1s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all .1s ease-out
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(1rem);
+  opacity: 0;
+}

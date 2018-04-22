@@ -35,13 +35,8 @@ const hotMiddleware = require('webpack-hot-middleware')(compiler, {
   log: false,
 });
 // force page reload when html-webpack-plugin template changes
-compiler.plugin('compilation', (compilation) => {
-  compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-    hotMiddleware.publish({ action: 'reload' });
-    if (typeof cb === 'function') {
-      cb();
-    }
-  });
+compiler.hooks.compilation.tap('html-webpack-plugin-after-emit', () => {
+  hotMiddleware.publish({ action: 'reload' });
 });
 
 // proxy api requests

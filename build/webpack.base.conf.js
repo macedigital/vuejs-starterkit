@@ -1,5 +1,6 @@
 const path = require('path');
 const friendlyFormatter = require('eslint-friendly-formatter');
+const { VueLoaderPlugin } = require('vue-loader');
 
 const utils = require('./utils');
 const config = require('../config');
@@ -25,6 +26,9 @@ module.exports = {
     },
   },
   stats: 'minimal',
+  plugins: [
+    new VueLoaderPlugin(),
+  ],
   module: {
     rules: [
       {

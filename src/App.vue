@@ -6,7 +6,7 @@
       <router-link :to="{ name: 'store' }">Store</router-link>
     </header>
     <main>
-      <img src="./assets/images/logo.png" alt="Vue.js PWA">
+      <img src="@/assets/images/logo.png" alt="Vue.js PWA">
       <transition appear mode="out-in" name="slide-fade">
         <router-view></router-view>
       </transition>
@@ -20,4 +20,4 @@ export default {
 };
 </script>
 
-<style lang="less" src="./assets/styles/app.less"></style>
+<style lang="less" src="@/assets/styles/app.less"></style>

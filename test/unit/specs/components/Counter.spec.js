@@ -1,29 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { shallow } from 'avoriaz';
-import sinon from 'sinon';
 import Counter from '@/components/Counter';
+import createState from '@/store/createState';
+import mutations, { MIN_COUNT, MAX_COUNT } from '@/store/mutations';
 
 Vue.use(Vuex);
 
 describe('Counter.vue', () => {
   let wrapper;
-  let incrButton;
-  let decrButton;
+  let store;
   let initialCount;
 
   beforeEach(() => {
     initialCount = 3;
-    incrButton = sinon.spy();
-    decrButton = sinon.spy();
 
-    const store = new Vuex.Store({
-      state: {
+    store = new Vuex.Store({
+      state: createState({
         count: initialCount,
-      },
+      }),
       mutations: {
-        decrement: decrButton,
-        increment: incrButton,
+        ...mutations,
       },
     });
 
@@ -35,13 +32,65 @@ describe('Counter.vue', () => {
     expect(preTag).to.equal(`Current count: ${initialCount}`);
   });
 
-  it('should call decrement when - button is clicked', () => {
-    wrapper.find('button')[0].trigger('click');
-    expect(decrButton.callCount).to.equal(1);
+  it('should show remaing items value', () => {
+    const remainingTag = wrapper.find('p')[0];
+    const remainingItems = MAX_COUNT - initialCount;
+    expect(remainingTag.text()).to.equal(`You can add ${remainingItems} more items.`);
+    expect(remainingTag.hasClass('alert')).to.equal(false);
   });
 
-  it('should call increment when + button is clicked', () => {
+  it('should decrement count when - button is clicked', () => {
+    const expectedCount = initialCount - 1;
+    wrapper.find('button')[0].trigger('click');
+    expect(store.state.count).to.equal(expectedCount);
+  });
+
+  it('should increment count when + button is clicked', () => {
+    const expectedCount = initialCount + 1;
     wrapper.find('button')[1].trigger('click');
-    expect(incrButton.callCount).to.equal(1);
+    expect(store.state.count).to.equal(expectedCount);
+  });
+
+  describe('When counter is at minimum', () => {
+    beforeEach(() => {
+      store.state.count = MIN_COUNT;
+      wrapper.update();
+    });
+
+    it('Should disable decrement button', () => {
+      const btn = wrapper.find('button')[0];
+      expect(btn.hasAttribute('disabled')).to.equal(true);
+    });
+  });
+
+  describe('When count value is one less below limit', () => {
+    beforeEach(() => {
+      store.state.count = MAX_COUNT - 1;
+      wrapper.update();
+    });
+
+    it('Should print alert message to user', () => {
+      const remainingTag = wrapper.find('p')[0];
+      expect(remainingTag.text()).to.equal('Only 1 items remain!');
+      expect(remainingTag.hasClass('alert')).to.equal(true);
+    });
+  });
+
+  describe('When counter is at maximum', () => {
+    beforeEach(() => {
+      store.state.count = MAX_COUNT;
+      wrapper.update();
+    });
+
+    it('Should print alert message to user', () => {
+      const remainingTag = wrapper.find('p')[0];
+      expect(remainingTag.text()).to.equal('No more items!');
+      expect(remainingTag.hasClass('alert')).to.equal(true);
+    });
+
+    it('Should disable increment button', () => {
+      const btn = wrapper.find('button')[1];
+      expect(btn.hasAttribute('disabled')).to.equal(true);
+    });
   });
 });
